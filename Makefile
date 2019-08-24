@@ -417,6 +417,6 @@ pack: webpack-run
 
 # Custom
 # 
-#.DEFAULT_GOAL=commit-push
+.DEFAULT_GOAL=commit-push
 #install: npm-install
 #run: npm-run
