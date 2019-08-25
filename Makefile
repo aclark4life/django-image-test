@@ -50,14 +50,13 @@
 # https://www.gnu.org/software/make/manual/html_node/Using-Variables.html
 
 TMPDIR := $(shell mktemp -d)  # https://stackoverflow.com/a/589260/185820
-UNAME:=$(shell uname)
+UNAME := $(shell uname)
+PROJECT := project
+APP := app
 
-APP=app  # Django
-DOC=doc  # Sphinx
-PROJECT=project  # Django
 # Git
-COMMIT_MESSAGE="Update"
-REMOTES=`\
+COMMIT_MESSAGE = "Update"
+REMOTES = `\
 	git branch -a |\
 	grep remote   |\
 	grep -v HEAD  |\
@@ -117,10 +116,11 @@ django-app-init:
 	-touch $(PROJECT)/$(APP)/templates/base.html
 	-django-admin startproject $(PROJECT) .
 	-django-admin startapp $(APP) $(PROJECT)/$(APP)
-django-db-clean:  # PostgreSQL
+django-db-drop:  # PostgreSQL
 	-dropdb $(PROJECT)
 django-db-init:  # PostgreSQL
-	-createdb $(PROJECT)_$(APP)
+	$(MAKE) django-db-drop
+	-createdb $(PROJECT)
 db-init: django-db-init  # Alias
 django-debug: django-shell  # Alias
 django-graph:
@@ -133,7 +133,7 @@ django-init:
 	git add manage.py
 	@$(MAKE) commit-push
 django-install:
-	@echo "Django\ndj-database-url\npsycopg2\n" > requirements.txt
+	@echo "Django\ndj-database-url\npsycopg2-binary\n" > requirements.txt
 	@$(MAKE) pip-install
 	@$(MAKE) freeze
 	-git add requirements.txt
@@ -417,6 +417,6 @@ pack: webpack-run
 
 # Custom
 # 
-.DEFAULT_GOAL=commit-push
+#.DEFAULT_GOAL=commit-push
 #install: npm-install
 #run: npm-run
