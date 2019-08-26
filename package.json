@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/aclark4life/django-image-test/issues"
   },
-  "homepage": "https://github.com/aclark4life/django-image-test#readme"
+  "homepage": "https://github.com/aclark4life/django-image-test#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1"
+  }
 }
